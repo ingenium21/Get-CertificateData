@@ -3,7 +3,6 @@
 # Office: Mindshift Systems Engineer
 # Project: cert report
 # Date: 01/11/2019
-# Version: 0.1, powershell spinoff
 # License: GPLv3
 ##############################################
 
