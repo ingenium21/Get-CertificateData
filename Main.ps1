@@ -1,17 +1,18 @@
-﻿. .\Functions\getCertificateData.ps1
-. .\Functions\get-IPRange.ps1
-
-param (
-    [Parameter(Mandatory=$true)][string]$ipAddress,
+﻿param
+(
+    [string]$ipAddress,
     [string]$start,
     [string]$end,
     [string]$mask,
     [int]$cidr
 )
 
+. .\Functions\getCertificateData.ps1
+. .\Functions\get-IPRange.ps1
+
 $ipAddresses = @()
 
-if ($ipAddress) {
+if ($ipAddress -and !($mask) -and !($cidr)) {
     $ipAddresses = $ipAddress
 }
 
@@ -38,6 +39,7 @@ if (!(Test-Path $resultsPath)) {
 }
 
 foreach ($ip in $ipAddresses) {
+    "working on $ip"
     $results = get-CertificateData -Ip $ip -ErrorAction SilentlyContinue
      
     if ($null -ne $results){
