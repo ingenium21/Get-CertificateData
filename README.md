@@ -17,7 +17,7 @@ Get's SSL Certificate Data from IP and Port
 # Results
 Results will be spit out in a report called results.csv
 
-# PS
+# Progress
 You will see a progress in your powershell window:
 
 ![alt text][progress]
