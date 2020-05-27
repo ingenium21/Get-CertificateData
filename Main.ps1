@@ -34,23 +34,20 @@ else {
 
 $resultsPath = ".\results.csv"
 
-if (!(Test-Path $resultsPath)) {
-    new-item -type file .\results.csv
+if ((Test-Path $resultsPath)) {
+    remove-item $resultsPath
+    new-item -type file $resultsPath
+}
+else {
+    new-item -type file $resultsPath
 }
 
 foreach ($ip in $ipAddresses) {
     "working on $ip"
     $results = get-CertificateData -Ip $ip -ErrorAction SilentlyContinue
-    if ($results -ne $null){
-        $SSLProtocols = Test-SslProtocols -ComputerName $ip -ErrorAction SilentlyContinue
-        $results | Add-Member -MemberType NoteProperty -Name "SSL2" -Value $SSLProtocols.Ssl2
-        $results | Add-Member -MemberType NoteProperty -Name "SSL3" -Value $SSLProtocols.Ssl3
-        $results | Add-Member -MemberType NoteProperty -Name "TLS" -Value $SSLProtocols.Tls
-        $results | Add-Member -MemberType NoteProperty -Name "TLS 1.1" -Value $SSLProtocols.Tls11
-        $results | Add-Member -MemberType NoteProperty -Name "TLS 1.2" -Value $SSLProtocols.Tls12
-    }
+	
     if ($null -ne $results){
         Write-Host $results
-        $results | export-csv .\results.csv -Append
+        $results | export-csv $resultsPath -Append
     }
 }
