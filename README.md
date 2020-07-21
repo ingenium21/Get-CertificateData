@@ -1,10 +1,10 @@
-# Prequisites
-Windows Powershell 3 or higher OR Powershell-Core 6 or higher.
-
 # Get-CertificateData
 Get's SSL Certificate Data from IP and Port
 
-## How to Run this script.
+# Prequisites
+Windows Powershell 3 or higher OR Powershell-Core 6 or higher.
+
+# How to Run this script.
 - Open powershell and navigate to the location of this script.
 - run the Main Script like so:
   - To run the script using CIDR parameters:
@@ -28,4 +28,6 @@ You will see a progress in your powershell window:
 [progress]: /images/progress.png
 
 # To-Do
-fix sslprotocols.ps1, it does not appear to return anything.
+~~fix sslprotocols.ps1, it does not appear to return anything.~~
+
+Add a GUI
