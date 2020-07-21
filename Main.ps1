@@ -46,8 +46,9 @@ else {
 foreach ($ip in $ipAddresses) {
     "working on $ip"
     $results = get-CertificateData -Ip $ip -ErrorAction SilentlyContinue
-    $results += Test-SslProtocols -ComputerName $ip
-    
+    $protocols += Test-SslProtocols -ComputerName $ip
+    $results += $protocols
+
     if ($null -ne $results){
         Write-Host $results
         $results | export-csv $resultsPath -Append
