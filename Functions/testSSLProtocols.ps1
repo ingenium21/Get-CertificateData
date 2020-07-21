@@ -7,7 +7,7 @@ function Test-SslProtocols {
       [int]$Port = 443
     )
     begin {
-      $ProtocolNames = [System.Security.Authentication.SslProtocols] | gm -static -MemberType Property | ?{$_.Name -notin @("Default","None")} | %{$_.Name}
+      $ProtocolNames = [System.Security.Authentication.SslProtocols] | Get-Member -static -MemberType Property | Where-Object{$_.Name -notin @("Default","None")} | ForEach-Object{$_.Name}
     }
     process {
       $ProtocolStatus = [Ordered]@{}
@@ -16,7 +16,7 @@ function Test-SslProtocols {
       $ProtocolStatus.Add("KeyLength", $null)
       $ProtocolStatus.Add("SignatureAlgorithm", $null)
       
-      $ProtocolNames | %{
+      $ProtocolNames | ForEach-Object{
         $ProtocolName = $_
         $Socket = New-Object System.Net.Sockets.Socket([System.Net.Sockets.SocketType]::Stream, [System.Net.Sockets.ProtocolType]::Tcp)
         $Socket.Connect($ComputerName, $Port)
