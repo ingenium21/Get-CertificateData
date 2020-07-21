@@ -1,6 +1,6 @@
 ﻿param
 (
-    [string]$ipAddress,
+    [string]$ipAddress="10.154.2.161",
     [string]$start,
     [string]$end,
     [string]$mask,
@@ -9,6 +9,7 @@
 
 . .\Functions\getCertificateData.ps1
 . .\Functions\get-IPRange.ps1
+. .\Functions\testSSLProtocols.ps1
 
 $ipAddresses = @()
 
@@ -45,7 +46,15 @@ else {
 foreach ($ip in $ipAddresses) {
     "working on $ip"
     $results = get-CertificateData -Ip $ip -ErrorAction SilentlyContinue
-	
+    if ($null -ne $results.'Server Name from DNS'){
+        $protocols = Test-SslProtocols -ComputerName $results.'Server Name from DNS'
+        $results | add-member -MemberType NoteProperty -Name "Thumbprint" -Value $protocols.Certificate.Thumbprint
+        $results | Add-Member -MemberType NoteProperty -Name "Sslv2" -Value $protocols.Ssl2
+        $results | Add-Member -MemberType NoteProperty -Name "Sslv3" -Value $protocols.Ssl3
+        $results | Add-Member -MemberType NoteProperty -Name "Tls" -Value $protocols.Tls
+        $results | Add-Member -MemberType NoteProperty -Name "Tls11" -Value $protocols.Tls11
+        $results | Add-Member -MemberType NoteProperty -Name "Tls12" -Value $protocols.Tls12
+    }
     if ($null -ne $results){
         Write-Host $results
         $results | export-csv $resultsPath -Append
