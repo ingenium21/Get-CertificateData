@@ -1,3 +1,6 @@
+# Prequisites
+Windows Powershell 3 or higher OR Powershell-Core 6 or higher.
+
 # Get-CertificateData
 Get's SSL Certificate Data from IP and Port
 
