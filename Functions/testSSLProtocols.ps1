@@ -35,7 +35,7 @@ function Test-SslProtocols {
           $SslStream.Close()
         }
       }
-      [PSCustomObject]$ProtocolStatus
+      return [PSCustomObject]$ProtocolStatus
     }
   }
  

@@ -9,6 +9,7 @@
 
 . .\Functions\getCertificateData.ps1
 . .\Functions\get-IPRange.ps1
+. .\Functions\testSSLProtocols.ps1
 
 $ipAddresses = @()
 
@@ -45,7 +46,8 @@ else {
 foreach ($ip in $ipAddresses) {
     "working on $ip"
     $results = get-CertificateData -Ip $ip -ErrorAction SilentlyContinue
-	
+    $results += Test-SslProtocols -ComputerName $ip
+    
     if ($null -ne $results){
         Write-Host $results
         $results | export-csv $resultsPath -Append
