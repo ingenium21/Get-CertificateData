@@ -57,6 +57,6 @@ foreach ($ip in $ipAddresses) {
     }
     if ($null -ne $results){
         Write-Host $results
-        $results | export-csv $resultsPath -Append
+        $results | export-csv $resultsPath -Append -Force
     }
 }
